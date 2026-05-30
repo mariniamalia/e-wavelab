@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MENU UTAMA - E-WAVELAB</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    
+    <style>
+        /* Menggunakan Poppins untuk seluruh elemen */
+        * {
+            font-family: 'Poppins', sans-serif;
+            box-sizing: border-box;
+        }
+
+        body { 
+            margin: 0; 
+            background: linear-gradient(rgba(56, 2, 8, 0.7), rgba(128, 0, 0, 0.9)), 
+                        url('gbrGEM.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 500px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 25px;
+            backdrop-filter: blur(12px);
+            border: 2px solid #FFD700;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            max-height: 90vh;
+        }
+
+        h1 {
+            color: #FFD700;
+            font-size: 32px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .tombol-grup {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .menu-btn {
+            padding: 14px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #FFD700;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .menu-btn:hover {
+            background: #FFD700;
+            color: #380208;
+            transform: scale(1.02);
+        }
+
+        /* Gaya khusus tombol kembali ke beranda */
+        .btn-home { 
+            margin-top: 5px;
+            border-color: #ffffff;
+        }
+        .btn-home:hover { background: #ffffff; color: #380208; }
+    </style>
+</head>
+<body>
+    <audio id="suara-klik" src="klik.mp3"></audio>
+
+    <div class="container animate__animated animate__fadeIn">
+        <h1>MENU UTAMA</h1>
+        <div class="tombol-grup">
+            <button class="menu-btn" onclick="mainkanDanPindah('tujuan.html')">TUJUAN</button>
+            <button class="menu-btn" onclick="mainkanDanPindah('materi.html')">MATERI</button>
+            <button class="menu-btn" onclick="mainkanDanPindah('simulasi.html')">SIMULASI</button>
+            <button class="menu-btn" onclick="mainkanDanPindah('evaluasi.html')">EVALUASI</button>
+            <button class="menu-btn" onclick="mainkanDanPindah('referensi.html')">REFERENSI</button>
+            <button class="menu-btn" onclick="mainkanDanPindah('finish.html')">FINISH</button>
+            <button class="menu-btn btn-home" onclick="mainkanDanPindah('index.html')">KEMBALI KE BERANDA</button>
+        </div>
+    </div>
+
+    <script>
+        function mainkanDanPindah(url) {
+            var suara = document.getElementById("suara-klik");
+            suara.play();
+            setTimeout(function() {
+                window.location.href = url;
+            }, 300);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <title>MATERI - E-WAVELAB</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    
+    <style>
+        /* Menggunakan Poppins untuk seluruh elemen */
+        * {
+            font-family: 'Poppins', sans-serif !important;
+            box-sizing: border-box;
+        }
+
+        body { 
+            margin: 0; 
+            background: linear-gradient(rgba(56, 2, 8, 0.7), rgba(128, 0, 0, 0.9)), url('gbrGEM.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 900px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 25px;
+            border-radius: 25px;
+            backdrop-filter: blur(12px);
+            border: 2px solid #FFD700;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            max-height: 90vh;
+        }
+
+        /* Judul slide sekarang mengikuti font Poppins */
+        h2 { 
+            color: #FFD700; 
+            margin: 0 0 10px 0; 
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        #slide-container {
+            flex-grow: 1; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .peta-konsep-visual img {
+            max-width: 100%;
+            max-height: 60vh;
+            object-fit: contain;
+            border-radius: 15px;
+            border: 2px solid #FFD700;
+        }
+
+        .nav-buttons { 
+            padding-top: 15px;
+            display: flex; 
+            justify-content: center; 
+            gap: 15px;
+        }
+
+        button { 
+            padding: 12px 25px; 
+            font-size: 15px; 
+            font-weight: 600;
+            background-color: #FFD700; 
+            color: #380208; 
+            border: none; 
+            border-radius: 10px; 
+            cursor: pointer; 
+            transition: 0.3s;
+        }
+
+        button:hover { background: #fff; transform: scale(1.05); }
+    </style>
+</head>
+<body class="animate__animated animate__fadeIn">
+
+    <audio id="suara-klik" src="klik.mp3"></audio>
+
+    <div class="container">
+        <h2 id="slide-title">Peta Konsep</h2>
+        <div id="slide-container"></div>
+        <div class="nav-buttons" id="nav-buttons"></div>
+    </div>
+
+    <script>
+        const materi = [
+            "Peta Konsep", "Konsep Gelombang Elektromagnetik", "Spektrum Gelombang Elektromagnetik",
+            "Karakteristik Sinar Gamma", "Karakteristik Sinar X", "Karakteristik Sinar Ultraviolet",
+            "Karakteristik Cahaya Tampak", "Karakteristik Infra Merah", "Karakteristik Gelombang Mikro",
+            "Karakteristik Gelombang Radio"
+        ];
+
+        const daftarGambar = [
+            "peta_konsep.png", "2-konsep.png", "3-spektrum.png", "4-gamma.jpg", 
+            "5-x.jpg", "6-uv.jpg", "7-tampak.jpg", "8-merah.jpg", "9-mikro.jpg", "10-radio.jpg"
+        ];
+
+        let indexSlide = 0;
+
+        function tampilkanSlide() {
+            const container = document.getElementById("slide-container");
+            const title = document.getElementById("slide-title");
+            const navButtons = document.getElementById("nav-buttons");
+            
+            title.innerText = materi[indexSlide];
+            container.innerHTML = `
+                <div class="peta-konsep-visual">
+                    <img src="${daftarGambar[indexSlide]}" alt="${materi[indexSlide]}">
+                </div>
+            `;
+
+            let buttonsHTML = "";
+            if (indexSlide > 0) buttonsHTML += `<button onclick="pindahSlide(-1)">PREVIOUS</button>`;
+            buttonsHTML += `<button onclick="mainkanDanPindah('menu.html')">MENU</button>`;
+            if (indexSlide < daftarGambar.length - 1) buttonsHTML += `<button onclick="pindahSlide(1)">NEXT</button>`;
+
+            navButtons.innerHTML = buttonsHTML;
+        }
+
+        function pindahSlide(arah) {
+            document.getElementById("suara-klik").play();
+            indexSlide += arah;
+            tampilkanSlide();
+        }
+
+        function mainkanDanPindah(url) {
+            document.getElementById("suara-klik").play();
+            setTimeout(() => { window.location.href = url; }, 300);
+        }
+
+        tampilkanSlide();
+    </script>
+</body>
+</html>

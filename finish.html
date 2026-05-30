@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finish - E-WAVELAB</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Satisfy&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        body { 
+            margin: 0; 
+            background: linear-gradient(rgba(56, 2, 8, 0.7), rgba(128, 0, 0, 0.9)), url('gbrGEM.jpg'); 
+            background-size: cover; background-position: center; background-attachment: fixed;
+            min-height: 100vh; display: flex; justify-content: center; align-items: center;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .container {
+            text-align: center; background: rgba(0, 0, 0, 0.7); padding: 40px; 
+            border-radius: 30px; border: 2px solid #FFD700; backdrop-filter: blur(15px);
+            width: 90%; max-width: 600px; color: white;
+        }
+
+        h1 { font-size: 40px; color: #FFD700; margin-bottom: 20px; text-transform: uppercase; }
+
+        #finish-btn {
+            background-color: #FFD700; color: #380208; border: none; padding: 15px 40px; 
+            font-size: 20px; font-weight: 800; border-radius: 50px; cursor: pointer; transition: 0.3s;
+        }
+        #finish-btn:hover { transform: scale(1.05); background-color: #fff; }
+
+        #result-area { display: none; margin-top: 20px; }
+
+        .pantun-box { 
+            font-family: 'Satisfy', cursive; font-size: 20px; color: #FFD700; 
+            margin: 20px 0; padding: 15px; background: rgba(255, 255, 255, 0.05); 
+            border-left: 5px solid #FFD700; text-align: left; 
+        }
+
+        /* CSS BARU UNTUK MOTIVASI */
+        .motivasi-text {
+            font-size: 16px; color: #ffffff; font-style: italic;
+            line-height: 1.6; padding: 15px;
+            background: rgba(255, 255, 255, 0.1); border-radius: 10px;
+            margin: 15px 0; border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .feedback-box { margin: 20px 0; text-align: left; }
+        .feedback-box label { display: block; color: #FFD700; margin-bottom: 10px; font-weight: 600; }
+        textarea { 
+            width: 100%; height: 80px; padding: 15px; border-radius: 15px; 
+            border: 1px solid #FFD700; background: rgba(255, 255, 255, 0.1); 
+            color: white; font-family: 'Poppins', sans-serif; resize: none; box-sizing: border-box;
+        }
+
+        .btn-submit { 
+            margin-top: 10px; background: #FFD700; color: #380208; border: none; 
+            padding: 12px 30px; border-radius: 20px; cursor: pointer; font-weight: 700; 
+            width: 100%; font-size: 16px; transition: 0.3s;
+        }
+        .btn-submit:hover { background: #fff; }
+    </style>
+</head>
+<body>
+
+    <audio id="suara-klik" src="klik.mp3"></audio>
+
+    <div class="container">
+        <div id="initial-screen">
+            <h1>CONGRATS!</h1>
+            <p style="font-size: 18px; margin-bottom: 30px;">Kamu telah menyelesaikan seluruh rangkaian modul E-WAVELAB.</p>
+            <button id="finish-btn" onclick="revealFinish()">FINISH</button>
+        </div>
+
+        <div id="result-area">
+            <div class="pantun-box">
+                Sinar gamma sampai gelombang radio,<br>
+                Semuanya bermanfaat bagi manusia.<br>
+                Belajar fisika janganlah ragu,<br>
+                Karena ilmu membuka jalan bahagia.
+            </div>
+
+            <div class="motivasi-text">
+                “Gelombang elektromagnetik mengajarkan kita bahwa energi dapat merambat jauh dan memberi manfaat besar. Begitu juga semangat kalian—terus bergerak, terus bersinar, dan jangan pernah takut menghadapi tantangan. Belajar hari ini adalah cahaya untuk masa depan yang gemilang!”
+            </div>
+
+            <form id="feedbackForm" action="https://formspree.io/f/mjgzzjvz" method="POST">
+                <div class="feedback-box">
+                    <label for="feedback">Apa hal paling menarik yang baru kamu pelajari hari ini?</label>
+                    <textarea name="feedback" id="feedback" required placeholder="Tulis jawabanmu di sini..."></textarea>
+                </div>
+                <button type="submit" class="btn-submit" onclick="playSound()">
+                    <i class="fa-solid fa-paper-plane"></i> KIRIM FEEDBACK & SELESAI
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function playSound() { var s = document.getElementById("suara-klik"); if(s) s.play(); }
+
+        function revealFinish() {
+            playSound();
+            document.getElementById('initial-screen').style.display = 'none';
+            document.getElementById('result-area').style.display = 'block';
+        }
+
+        const form = document.getElementById('feedbackForm');
+        form.addEventListener('submit', function() {
+            setTimeout(() => { window.location.href = 'menu.html'; }, 500);
+        });
+    </script>
+</body>
+</html>

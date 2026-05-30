@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TUJUAN PEMBELAJARAN - E-WAVELAB</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    
+    <style>
+        /* Menggunakan Poppins untuk seluruh elemen */
+        * {
+            font-family: 'Poppins', sans-serif !important;
+            box-sizing: border-box;
+        }
+
+        body { 
+            margin: 0; 
+            background: linear-gradient(rgba(56, 2, 8, 0.7), rgba(128, 0, 0, 0.9)), 
+                        url('gbrGEM.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 700px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 50px;
+            border-radius: 25px;
+            backdrop-filter: blur(12px);
+            border: 2px solid #FFD700;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            text-align: center;
+        }
+
+        h1 {
+            color: #FFD700;
+            font-size: 36px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            margin-bottom: 30px;
+        }
+
+        .card p {
+            font-size: 18px;
+            line-height: 1.8;
+            text-align: justify;
+            color: #ffffff;
+            margin: 0;
+        }
+
+        button { 
+            padding: 15px 40px; 
+            font-size: 16px; 
+            background: #FFD700; 
+            color: #380208; 
+            border: none; 
+            border-radius: 10px; 
+            cursor: pointer; 
+            font-weight: 700;
+            transition: 0.3s;
+        }
+        button:hover { background: #fff; transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <audio id="suara-klik" src="klik.mp3"></audio>
+
+    <div class="container animate__animated animate__fadeIn">
+        <h1>TUJUAN PEMBELAJARAN</h1>
+        <div class="card">
+            <p>
+                Murid mampu menganalisis hubungan frekuensi, panjang gelombang, dan energi gelombang elektromagnetik serta menjelaskan penerapan gelombang elektromagnetik dalam kehidupan sehari-hari melalui pembelajaran interaktif berbasis Kecerdasan Artifisial.
+            </p>
+        </div>
+        
+        <div>
+            <button onclick="mainkanDanPindah('menu.html')">KEMBALI KE MENU UTAMA</button>
+        </div>
+    </div>
+
+    <script>
+        function mainkanDanPindah(url) {
+            var suara = document.getElementById("suara-klik");
+            suara.play();
+            setTimeout(function() {
+                window.location.href = url;
+            }, 300);
+        }
+    </script>
+</body>
+</html>

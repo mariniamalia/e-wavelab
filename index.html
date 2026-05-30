@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-WAVELAB</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Merriweather:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        /* Background yang sama dengan semua halaman lain */
+        body { 
+            margin: 0; 
+            background: linear-gradient(rgba(56, 2, 8, 0.7), rgba(128, 0, 0, 0.9)), 
+                        url('gbrGEM.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+            color: white;
+        }
+
+        /* Container dengan efek kaca yang seragam */
+        .container {
+            width: 90%;
+            max-width: 600px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 60px 40px;
+            border-radius: 25px;
+            backdrop-filter: blur(12px);
+            border: 2px solid #FFD700;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            text-align: center;
+        }
+
+        h1 {
+            color: #FFD700;
+            font-size: 52px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        p { font-size: 20px; letter-spacing: 2px; margin-bottom: 30px; }
+
+        .menu-btn {
+            display: inline-block;
+            width: 250px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #FFD700;
+            color: white;
+            font-size: 20px;
+            font-weight: 600;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .menu-btn:hover {
+            background: #FFD700;
+            color: #380208;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="suara-klik" src="klik.mp3"></audio>
+
+    <div class="container animate__animated animate__fadeIn">
+        <h1>E-WAVELAB</h1>
+        <p>GELOMBANG ELEKTROMAGNETIK</p>
+        
+        <button class="menu-btn" onclick="mainkanSuara()">START</button>
+    </div>
+
+    <script>
+        function mainkanSuara() {
+            var suara = document.getElementById("suara-klik");
+            suara.play();
+            
+            setTimeout(function() {
+                window.location.href = 'menu.html';
+            }, 500);
+        }
+    </script>
+</body>
+</html>

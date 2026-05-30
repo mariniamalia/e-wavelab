@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REFERENSI - E-WAVELAB</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Merriweather:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        body {
+            background: linear-gradient(rgba(56, 2, 8, 0.7), rgba(128, 0, 0, 0.9)), url('gbrGEM.jpg');
+            background-size: cover; background-position: center; background-attachment: fixed;
+            color: white; font-family: 'Poppins', sans-serif;
+            margin: 0; min-height: 100vh; display: flex; justify-content: center; align-items: center;
+        }
+
+        .container {
+            width: 95%; max-width: 1000px; background: rgba(0, 0, 0, 0.7);
+            padding: 30px; border-radius: 25px; backdrop-filter: blur(12px);
+            border: 2px solid #FFD700; text-align: center;
+            display: flex; flex-direction: column; max-height: 90vh; /* Agar tidak scroll */
+        }
+
+        h1 { color: #FFD700; font-family: 'poppins', serif; font-size: 40px; margin-bottom: 20px; }
+
+        .reference-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr); /* 2x2 grid agar lebih padat */
+            gap: 15px; margin-bottom: 20px; flex-grow: 1;
+        }
+
+        .ref-card {
+            background: rgba(255, 255, 255, 0.08); border: 1px solid #FFD700;
+            border-radius: 15px; padding: 15px; text-align: center;
+        }
+
+        .ref-card i { font-size: 30px; color: #FFD700; margin-bottom: 10px; }
+        .ref-card h3 { color: #FFD700; font-size: 16px; margin: 5px 0; }
+        .ref-card p { font-size: 12px; margin-bottom: 10px; }
+
+        .btn-link {
+            display: block; background: #FFD700; color: #380208;
+            text-decoration: none; padding: 8px; border-radius: 8px;
+            font-weight: 700; font-size: 12px; cursor: pointer; border: none; width: 100%;
+        }
+
+        .btn-back {
+            background: #FFD700; color: #380208; padding: 12px 30px;
+            border: none; border-radius: 30px; font-weight: 700; cursor: pointer;
+        }
+
+        button:hover { transform: scale(1.05); }
+    </style>
+</head>
+<body>
+
+<audio id="suara-klik" src="klik.mp3"></audio>
+
+<div class="container">
+    <h1>REFERENSI</h1>
+    
+    <div class="reference-grid">
+        <div class="ref-card">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <h3>Modul Fisika XII</h3>
+            <p>(Kemdikbudristek)</p>
+            <button class="btn-link" onclick="mainkanDanBuka('https://mediabelajar.web.id/wp-content/uploads/2022/08/XII_Fisika_KD-3.6_Radiasi-Elektromagnetik.pdf')">BACA</button>
+        </div>
+        <div class="ref-card">
+            <i class="fa-solid fa-book-open"></i>
+            <h3>Modul Radiasi</h3>
+            <p>(Kemdikbud)</p>
+            <button class="btn-link" onclick="mainkanDanBuka('https://repositori.kemendikdasmen.go.id/24194/1/Modul%203%20Mengenal%20Gelombang%20dan%20Radiasi.pdf')">BACA</button>
+        </div>
+        <div class="ref-card">
+            <i class="fa-solid fa-rocket"></i>
+            <h3>NASA Science</h3>
+            <p>(NASA Official)</p>
+            <button class="btn-link" onclick="mainkanDanBuka('https://science.nasa.gov/learn/heat/resource/the-electromagnetic-spectrum/')">KUNJUNGI</button>
+        </div>
+        <div class="ref-card">
+            <i class="fa-solid fa-flask-vial"></i>
+            <h3>Simulasi PhET</h3>
+            <p>(Colorado Univ)</p>
+            <button class="btn-link" onclick="mainkanDanBuka('https://phet.colorado.edu/en/simulations/radio-waves')">SIMULASI</button>
+        </div>
+    </div>
+
+    <div>
+        <button class="btn-back" onclick="mainkanDanPindah('menu.html')">KEMBALI KE MENU</button>
+    </div>
+</div>
+
+<script>
+    function playSound() { document.getElementById("suara-klik").play(); }
+    function mainkanDanBuka(url) { playSound(); setTimeout(() => { window.open(url, '_blank'); }, 300); }
+    function mainkanDanPindah(url) { playSound(); setTimeout(() => { window.location.href = url; }, 300); }
+</script>
+</body>
+</html>

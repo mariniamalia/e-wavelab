@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EVALUASI - E-WAVELAB</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Merriweather:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        body { 
+            margin: 0; 
+            background: linear-gradient(rgba(56, 2, 8, 0.7), rgba(128, 0, 0, 0.9)), url('gbrGEM.jpg'); 
+            background-size: cover; background-position: center; background-attachment: fixed;
+            min-height: 100vh; display: flex; justify-content: center; align-items: center;
+            font-family: 'Poppins', sans-serif; color: white;
+        }
+        .container { 
+            width: 95%; max-width: 800px; background: rgba(0, 0, 0, 0.7); 
+            padding: 40px; border-radius: 25px; border: 2px solid #FFD700;
+            backdrop-filter: blur(12px); box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            text-align: center;
+        }
+        h1 { font-family: 'poppins', serif; color: #FFD700; font-size: 42px; margin-bottom: 20px; }
+        .question { margin-bottom: 20px; background: rgba(255, 255, 255, 0.08); padding: 15px; border-radius: 10px; text-align: left; }
+        .options { list-style: none; padding: 0; }
+        .options li { margin: 8px 0; padding: 10px; background: #b39498; border-radius: 5px; cursor: pointer; transition: 0.3s; color: #380208; font-weight: bold; }
+        .options li:hover { background: #FFD700; }
+        button { padding: 15px 40px; font-size: 18px; font-weight: bold; background-color: #FFD700; color: #380208; border: none; border-radius: 10px; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        button:hover { background: #fff; transform: scale(1.05); }
+        
+        #result { 
+            display: none; flex-direction: column; justify-content: center; align-items: center; 
+            color: #FFD700; font-size: 20px; font-weight: bold; line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="suara-klik" src="klik.mp3"></audio>
+
+    <div class="container">
+        <h1>EVALUASI</h1>
+        <div id="quiz-area"></div>
+        <button id="submit-btn" onclick="hitungSkor()">SELESAI</button>
+        
+        <div id="result">
+            <h2 style="font-size: 36px; margin-bottom: 10px;">Hasil Evaluasi</h2>
+            <p id="score-details"></p>
+            <button id="back-btn" onclick="pindahKeMenu()">KEMBALI KE MENU</button>
+        </div>
+    </div>
+
+    <script>
+        function playSound() { document.getElementById("suara-klik").play(); }
+
+        const questions = [
+            { q: "Gelombang elektromagnetik dapat merambat di ruang hampa karena....", a: ["Getaran partikel zat", "Perpindahan energi", "Osilasi medan listrik & magnet", "Gelombang mekanik", "Perpindahan elektron"], correct: 2, penjelasan: "Gelombang EM tersusun atas medan listrik dan magnet yang berosilasi, sehingga tidak butuh medium."},
+            { q: "Sifat gelombang elektromagnetik (GEM) yang tepat adalah....", a: ["Perlu medium, Transversal", "Transversal, Polarisasi", "Perlu medium, Magnet sejajar", "Transversal, Magnet sejajar", "Magnet sejajar, Polarisasi"], correct: 1, penjelasan: "GEM adalah gelombang transversal dan satu-satunya gelombang yang bisa terpolarisasi."},
+            { q: "Urutan spektrum GEM frekuensi besar ke kecil:", a: ["Radio ke sinar-X", "Gamma ke cahaya tampak", "Sinar-X ke inframerah", "Cahaya tampak ke gamma", "Inframerah ke mikro"], correct: 1, penjelasan: "Urutan frekuensi terbesar ke terkecil: Gamma, X, UV, Cahaya Tampak, Inframerah, Mikro, Radio." },
+            { q: "Tujuan penggunaan frekuensi tinggi pada 5G adalah....", a: ["Kecepatan data tinggi", "Murah", "Jangkauan luas", "Tembus dinding", "Hemat daya"], correct: 0, penjelasan: "Frekuensi tinggi menyediakan *bandwidth* lebih besar untuk kecepatan transmisi data yang lebih tinggi." },
+            { q: "Sistem RADAR menggunakan gelombang....", a: ["Sinar-X", "UV", "Mikro", "Inframerah", "Cahaya tampak"], correct: 2, penjelasan: "RADAR menggunakan gelombang mikro karena sifatnya yang mudah dipantulkan oleh objek." },
+            { q: "Pemanfaatan sinar inframerah yang tepat:", a: ["Sterilisasi", "Foto tulang", "Terapi fisik", "Vitamin D", "Deteksi pipa"], correct: 2, penjelasan: "Inframerah digunakan dalam bidang medis (terapi fisik) dan peralatan elektronik (remote)." },
+            { q: "Panjang gelombang (6 x 10^14 Hz) adalah....", a: ["5 x 10^-7 m", "2 x 10^-6 m", "5 x 10^5 m", "2 x 10^6 m", "1,8 x 10^27 m"], correct: 0, penjelasan: "Dengan rumus λ = c/f, didapat: (3x10^8) / (6x10^14) = 5x10^-7 meter."},
+            { q: "Energi foton panjang gelombang 132 nm (h=6,6x10^-34):", a: ["1,5 x 10^-17 J", "1,5 x 10^-18 J", "1,5 x 10^-19 J", "4,5 x 10^-18 J", "4,5 x 10^-19 J"], correct: 1, penjelasan: "Menggunakan E = hc/λ, energi foton tersebut adalah 1,5 x 10^-18 Joule."},
+            { q: "Bahaya sinar ultraviolet bagi manusia:", a: ["DNA tulang", "Kemandulan", "Kanker kulit", "Suhu organ", "Rambut rontok"], correct: 2, penjelasan: "Paparan UV berlebih merusak sel kulit yang dapat memicu kanker kulit dan katarak mata."},
+            { q: "Sinar gamma memiliki daya tembus besar karena....", a: ["Panjang gelombang besar", "Frekuensi/energi tinggi", "Kecepatan tinggi", "Tidak diserap", "Amplitudo besar"], correct: 1, penjelasan: "Frekuensi dan energi sinar gamma adalah yang tertinggi di antara spektrum lainnya." }
+        ];
+
+        let userAnswers = new Array(questions.length).fill(null);
+        const quizArea = document.getElementById("quiz-area");
+
+        questions.forEach((item, index) => {
+            let div = document.createElement("div");
+            div.className = "question";
+            div.innerHTML = `<p>${index + 1}. ${item.q}</p><ul class="options"></ul>`;
+            item.a.forEach((opt, i) => {
+                let li = document.createElement("li");
+                li.textContent = opt;
+                li.onclick = function() {
+                    playSound();
+                    Array.from(this.parentElement.children).forEach(el => el.style.backgroundColor = "#b39498");
+                    this.style.backgroundColor = "#FFD700";
+                    this.style.color = "#380208";
+                    userAnswers[index] = i;
+                };
+                div.querySelector('.options').appendChild(li);
+            });
+            quizArea.appendChild(div);
+        });
+
+        function hitungSkor() {
+            playSound();
+            if (userAnswers.includes(null)) {
+                alert("Harap jawab semua soal terlebih dahulu!");
+                return;
+            }
+            let benar = 0;
+            let detailHTML = "";
+            userAnswers.forEach((ans, index) => {
+                if (ans === questions[index].correct) {
+                    benar++;
+                } else {
+                    detailHTML += `<p style="text-align: left; margin: 5px 0; color: #FFF; font-size: 14px;"><strong>Soal ${index + 1}:</strong> ${questions[index].penjelasan}</p>`;
+                }
+            });
+
+            document.getElementById("quiz-area").style.display = "none";
+            document.getElementById("submit-btn").style.display = "none";
+            const resDiv = document.getElementById("result");
+            resDiv.style.display = "flex";
+            document.getElementById("score-details").innerHTML = 
+                `Benar: ${benar} | Salah: ${questions.length - benar}<br>Skor Akhir: ${(benar / questions.length) * 100}<br><br>
+                 <div style="max-height: 200px; overflow-y: auto; width: 100%; border-top: 1px solid #FFD700; padding-top: 10px;">
+                    ${detailHTML}
+                 </div>`;
+        }
+
+        function pindahKeMenu() {
+            playSound();
+            setTimeout(() => { window.location.href = 'menu.html'; }, 300);
+        }
+    </script>
+</body>
+</html>
