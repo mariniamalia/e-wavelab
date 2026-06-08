@@ -2,150 +2,96 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
     <title>MATERI - E-WAVELAB</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     
     <style>
-        /* Menggunakan Poppins untuk seluruh elemen */
-        * {
-            font-family: 'Poppins', sans-serif !important;
-            box-sizing: border-box;
+        /* Memastikan Judul ke Tengah */
+        h1 { text-align: center; width: 100%; color: #5d4a8e; }
+
+        .materi-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            margin: 20px 0;
         }
 
-        body { 
-            margin: 0; 
-            background: linear-gradient(rgba(56, 2, 8, 0.7), rgba(128, 0, 0, 0.9)), url('gbrGEM.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-        }
-
-        .container {
-            width: 95%;
-            max-width: 900px;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 25px;
-            border-radius: 25px;
-            backdrop-filter: blur(12px);
-            border: 2px solid #FFD700;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+        .materi-card {
+            background: rgba(255, 255, 255, 0.5); 
+            padding: 10px;
+            border-radius: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.8);
             text-align: center;
-            display: flex;
-            flex-direction: column;
-            max-height: 90vh;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        /* Judul slide sekarang mengikuti font Poppins */
-        h2 { 
-            color: #FFD700; 
-            margin: 0 0 10px 0; 
+        .materi-card img {
+            width: 100%;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 5px;
+        }
+
+        .materi-card p {
+            font-size: 11px;
             font-weight: 700;
+            color: #5d4a8e;
+            margin: 5px 0;
             text-transform: uppercase;
         }
 
-        #slide-container {
-            flex-grow: 1; 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 10px 0;
-            overflow: hidden;
+        .materi-card:hover {
+            transform: translateY(-5px) scale(1.05);
+            background: rgba(211, 84, 0, 0.7);
+            box-shadow: 0 10px 20px rgba(211, 84, 0, 0.3);
         }
+        
+        .materi-card:hover p { color: #ffffff; }
 
-        .peta-konsep-visual img {
-            max-width: 100%;
-            max-height: 60vh;
-            object-fit: contain;
-            border-radius: 15px;
-            border: 2px solid #FFD700;
-        }
-
-        .nav-buttons { 
-            padding-top: 15px;
-            display: flex; 
-            justify-content: center; 
-            gap: 15px;
-        }
-
-        button { 
-            padding: 12px 25px; 
-            font-size: 15px; 
-            font-weight: 600;
-            background-color: #FFD700; 
-            color: #380208; 
-            border: none; 
-            border-radius: 10px; 
-            cursor: pointer; 
-            transition: 0.3s;
-        }
-
-        button:hover { background: #fff; transform: scale(1.05); }
+        @media (max-width: 768px) { .materi-grid { grid-template-columns: repeat(2, 1fr); } }
+        
+        /* Memastikan tombol kembali ke tengah */
+        .btn-wrapper { text-align: center; margin-top: 20px; }
     </style>
 </head>
-<body class="animate__animated animate__fadeIn">
-
+<body>
     <audio id="suara-klik" src="klik.mp3"></audio>
 
-    <div class="container">
-        <h2 id="slide-title">Peta Konsep</h2>
-        <div id="slide-container"></div>
-        <div class="nav-buttons" id="nav-buttons"></div>
+    <div class="container animate__animated animate__zoomIn">
+        <h1>MATERI GELOMBANG ELEKTROMAGNETIK</h1>
+        
+        <div class="materi-grid">
+            <div class="materi-card" onclick="bukaMateri('materi_detail.html?id=1')"><img src="assets/1-peta.PNG"><p>Peta Konsep</p></div>
+            <div class="materi-card" onclick="bukaMateri('materi_detail.html?id=2')"><img src="assets/2-konsep.PNG"><p>Konsep Gelombang</p></div>
+            <div class="materi-card" onclick="bukaMateri('materi_detail.html?id=3')"><img src="assets/3-spektrum.PNG"><p>Spektrum GEM</p></div>
+            <div class="materi-card" onclick="bukaMateri('materi_detail.html?id=4')"><img src="assets/4-gamma.PNG"><p>Sinar Gamma</p></div>
+            <div class="materi-card" onclick="bukaMateri('materi_detail.html?id=5')"><img src="assets/5-x.PNG"><p>Sinar-X</p></div>
+            <div class="materi-card" onclick="bukaMateri('materi_detail.html?id=6')"><img src="assets/6-uv.PNG"><p>Sinar UV</p></div>
+            <div class="materi-card" onclick="bukaMateri('materi_detail.html?id=7')"><img src="assets/7-tampak.PNG"><p>Cahaya Tampak</p></div>
+            <div class="materi-card" onclick="bukaMateri('materi_detail.html?id=8')"><img src="assets/8-merah.PNG"><p>Inframerah</p></div>
+            <div class="materi-card" onclick="bukaMateri('materi_detail.html?id=9')"><img src="assets/9-mikro.PNG"><p>Gelombang Mikro</p></div>
+            <div class="materi-card" onclick="bukaMateri('materi_detail.html?id=10')"><img src="assets/10-radio.PNG"><p>Gelombang Radio</p></div>
+        </div>
+
+        <div class="btn-wrapper">
+            <button class="btn btn-home" onclick="bukaMateri('menu.html')">KEMBALI KE MENU</button>
+        </div>
     </div>
 
     <script>
-        const materi = [
-            "Peta Konsep", "Konsep Gelombang Elektromagnetik", "Spektrum Gelombang Elektromagnetik",
-            "Karakteristik Sinar Gamma", "Karakteristik Sinar X", "Karakteristik Sinar Ultraviolet",
-            "Karakteristik Cahaya Tampak", "Karakteristik Infra Merah", "Karakteristik Gelombang Mikro",
-            "Karakteristik Gelombang Radio"
-        ];
-
-        const daftarGambar = [
-            "peta_konsep.png", "2-konsep.png", "3-spektrum.png", "4-gamma.jpg", 
-            "5-x.jpg", "6-uv.jpg", "7-tampak.jpg", "8-merah.jpg", "9-mikro.jpg", "10-radio.jpg"
-        ];
-
-        let indexSlide = 0;
-
-        function tampilkanSlide() {
-            const container = document.getElementById("slide-container");
-            const title = document.getElementById("slide-title");
-            const navButtons = document.getElementById("nav-buttons");
+        function bukaMateri(url) {
+            const audio = document.getElementById("suara-klik");
+            // Reset audio agar selalu bisa diklik cepat
+            audio.currentTime = 0;
+            audio.play().catch(e => console.log("Audio diblokir: ", e));
             
-            title.innerText = materi[indexSlide];
-            container.innerHTML = `
-                <div class="peta-konsep-visual">
-                    <img src="${daftarGambar[indexSlide]}" alt="${materi[indexSlide]}">
-                </div>
-            `;
-
-            let buttonsHTML = "";
-            if (indexSlide > 0) buttonsHTML += `<button onclick="pindahSlide(-1)">PREVIOUS</button>`;
-            buttonsHTML += `<button onclick="mainkanDanPindah('menu.html')">MENU</button>`;
-            if (indexSlide < daftarGambar.length - 1) buttonsHTML += `<button onclick="pindahSlide(1)">NEXT</button>`;
-
-            navButtons.innerHTML = buttonsHTML;
+            setTimeout(() => {
+                location.href = url;
+            }, 300);
         }
-
-        function pindahSlide(arah) {
-            document.getElementById("suara-klik").play();
-            indexSlide += arah;
-            tampilkanSlide();
-        }
-
-        function mainkanDanPindah(url) {
-            document.getElementById("suara-klik").play();
-            setTimeout(() => { window.location.href = url; }, 300);
-        }
-
-        tampilkanSlide();
     </script>
 </body>
 </html>
