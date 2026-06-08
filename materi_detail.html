@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail Materi - E-WAVELAB</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    
+    <style>
+        .infografis-besar {
+            max-height: 60vh; 
+            width: auto;      
+            max-width: 100%;
+            object-fit: contain;
+            margin: 0 auto 20px auto;
+            display: block;
+            border-radius: 20px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 90vh;
+        }
+    </style>
+</head>
+<body>
+    <audio id="suara-klik" src="klik.mp3"></audio>
+
+    <div class="container animate__animated animate__fadeIn">
+        <h1 id="judul-materi" style="margin-bottom: 20px;">Loading...</h1>
+        
+        <img id="gambar-infografis" src="" alt="Infografis" class="infografis-besar">
+        
+        <button class="btn btn-home" onclick="bukaMateri('materi.html')">KEMBALI KE DAFTAR MATERI</button>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('id');
+
+        const data = {
+            '1': { judul: 'PETA KONSEP', src: 'assets/1-peta.PNG' },
+            '2': { judul: 'KONSEP GELOMBANG', src: 'assets/2-konsep.PNG' },
+            '3': { judul: 'SPEKTRUM GEM', src: 'assets/3-spektrum.PNG' },
+            '4': { judul: 'SINAR GAMMA', src: 'assets/4-gamma.PNG' },
+            '5': { judul: 'SINAR-X', src: 'assets/5-x.PNG' },
+            '6': { judul: 'ULTRAVIOLET', src: 'assets/6-uv.PNG' },
+            '7': { judul: 'CAHAYA TAMPAK', src: 'assets/7-tampak.PNG' },
+            '8': { judul: 'INFRAMERAH', src: 'assets/8-merah.PNG' },
+            '9': { judul: 'GELOMBANG MIKRO', src: 'assets/9-mikro.PNG' },
+            '10': { judul: 'GELOMBANG RADIO', src: 'assets/10-radio.PNG' }
+        };
+
+        if (data[id]) {
+            document.getElementById('judul-materi').innerText = data[id].judul;
+            document.getElementById('gambar-infografis').src = data[id].src;
+        } else {
+            document.getElementById('judul-materi').innerText = "Materi tidak ditemukan";
+        }
+
+        // 3. Tambahkan fungsi untuk memutar suara dan pindah halaman
+        function bukaMateri(url) {
+            const audio = document.getElementById("suara-klik");
+            audio.currentTime = 0; // Reset ke detik 0
+            audio.play().catch(e => console.log("Audio diblokir: ", e));
+            
+            setTimeout(() => {
+                location.href = url;
+            }, 300); // Jeda 300ms agar suara terdengar
+        }
+    </script>
+</body>
+</html>
