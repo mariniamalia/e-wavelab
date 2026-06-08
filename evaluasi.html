@@ -4,121 +4,118 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EVALUASI - E-WAVELAB</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Merriweather:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet"/>
     <style>
-        body { 
-            margin: 0; 
-            background: linear-gradient(rgba(56, 2, 8, 0.7), rgba(128, 0, 0, 0.9)), url('gbrGEM.jpg'); 
-            background-size: cover; background-position: center; background-attachment: fixed;
-            min-height: 100vh; display: flex; justify-content: center; align-items: center;
-            font-family: 'Poppins', sans-serif; color: white;
-        }
+        body { margin: 0; font-family: 'Poppins', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; background: #fdf5f5; }
         .container { 
-            width: 95%; max-width: 800px; background: rgba(0, 0, 0, 0.7); 
-            padding: 40px; border-radius: 25px; border: 2px solid #FFD700;
-            backdrop-filter: blur(12px); box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-            text-align: center;
+            width: 90%; max-width: 600px; height: 90vh; 
+            background: rgba(237, 190, 190, 0.85); 
+            padding: 20px; border-radius: 40px; border: 2px solid rgba(255,255,255,0.8);
+            backdrop-filter: blur(15px); display: flex; flex-direction: column; 
+            text-align: center; overflow: hidden; transition: all 0.5s ease;
         }
-        h1 { font-family: 'poppins', serif; color: #FFD700; font-size: 42px; margin-bottom: 20px; }
-        .question { margin-bottom: 20px; background: rgba(255, 255, 255, 0.08); padding: 15px; border-radius: 10px; text-align: left; }
-        .options { list-style: none; padding: 0; }
-        .options li { margin: 8px 0; padding: 10px; background: #b39498; border-radius: 5px; cursor: pointer; transition: 0.3s; color: #380208; font-weight: bold; }
-        .options li:hover { background: #FFD700; }
-        button { padding: 15px 40px; font-size: 18px; font-weight: bold; background-color: #FFD700; color: #380208; border: none; border-radius: 10px; cursor: pointer; transition: 0.3s; margin-top: 10px; }
-        button:hover { background: #fff; transform: scale(1.05); }
-        
-        #result { 
-            display: none; flex-direction: column; justify-content: center; align-items: center; 
-            color: #FFD700; font-size: 20px; font-weight: bold; line-height: 1.4;
-        }
+        #quiz-container { flex-grow: 1; overflow-y: auto; padding: 10px; }
+        .soal-card { background: rgba(255,255,255,0.4); padding: 15px; border-radius: 15px; margin-bottom: 10px; text-align: left; }
+        .soal-card p { font-weight: 700; color: #333; margin: 0 0 8px 0; font-size: 15px; }
+        .opsi-btn { display: block; width: 100%; padding: 10px; margin: 4px 0; border-radius: 8px; border: 1px solid rgba(255,255,255,0.5); background: rgba(255,255,255,0.3); cursor: pointer; font-size: 14px; font-weight: 600; text-align: left; }
+        .benar { background: #84fab0 !important; color: #fff; }
+        .salah { background: #ff6b6b !important; color: #fff; }
+        .page { display: none; }
+        .page.active { display: block; }
+        h1 { font-size: 24px; margin-bottom: 10px; color: #5d4a8e; }
+        .btn-nav { padding: 10px 20px; cursor: pointer; border-radius: 20px; border: none; font-weight: 800; background: #5d4a8e; color: white; margin: 5px; }
+        .btn-nav:disabled { background: #ccc; cursor: not-allowed; }
+        .penjelasan-text { font-weight: 700; color: #4a3a6a; margin-top: 5px; font-size: 13px; }
     </style>
 </head>
 <body>
 
-    <audio id="suara-klik" src="klik.mp3"></audio>
+<audio id="suara-klik" src="klik.mp3"></audio>
 
-    <div class="container">
-        <h1>EVALUASI</h1>
-        <div id="quiz-area"></div>
-        <button id="submit-btn" onclick="hitungSkor()">SELESAI</button>
-        
-        <div id="result">
-            <h2 style="font-size: 36px; margin-bottom: 10px;">Hasil Evaluasi</h2>
-            <p id="score-details"></p>
-            <button id="back-btn" onclick="pindahKeMenu()">KEMBALI KE MENU</button>
-        </div>
+<div class="container" id="main-container">
+    <h1 id="eval-title">EVALUASI (Hal <span id="page-num">1</span>/5)</h1>
+    <div id="quiz-container"></div>
+    <div id="hasil-wrapper" style="text-align:center;">
+        <div id="hasil" style="font-size:24px; font-weight:800; color:#5d4a8e; margin-bottom:15px;"></div>
+        <div id="nav-btns"></div>
     </div>
+</div>
 
-    <script>
-        function playSound() { document.getElementById("suara-klik").play(); }
+<script>
+    const questions = [
+        { q: "Gelombang elektromagnetik dapat merambat di ruang hampa karena....", a: ["Getaran partikel zat", "Perpindahan energi", "Osilasi medan listrik & magnet", "Gelombang mekanik", "Perpindahan elektron"], correct: 2, penjelasan: "Gelombang EM tersusun atas medan listrik dan magnet yang berosilasi, sehingga tidak butuh medium."},
+        { q: "Sifat gelombang elektromagnetik (GEM) yang tepat adalah....", a: ["Perlu medium, Transversal", "Transversal, Polarisasi", "Perlu medium, Magnet sejajar", "Transversal, Magnet sejajar", "Magnet sejajar, Polarisasi"], correct: 1, penjelasan: "GEM adalah gelombang transversal dan satu-satunya gelombang yang bisa terpolarisasi."},
+        { q: "Urutan spektrum GEM frekuensi besar ke kecil:", a: ["Radio ke sinar-X", "Gamma ke cahaya tampak", "Sinar-X ke inframerah", "Cahaya tampak ke gamma", "Inframerah ke mikro"], correct: 1, penjelasan: "Urutan frekuensi terbesar ke terkecil: Gamma, X, UV, Cahaya Tampak, Inframerah, Mikro, Radio." },
+        { q: "Tujuan penggunaan frekuensi tinggi pada 5G adalah....", a: ["Kecepatan data tinggi", "Murah", "Jangkauan luas", "Tembus dinding", "Hemat daya"], correct: 0, penjelasan: "Frekuensi tinggi menyediakan bandwidth lebih besar untuk kecepatan transmisi data yang lebih tinggi." },
+        { q: "Sistem RADAR menggunakan gelombang....", a: ["Sinar-X", "UV", "Mikro", "Inframerah", "Cahaya tampak"], correct: 2, penjelasan: "RADAR menggunakan gelombang mikro karena sifatnya yang mudah dipantulkan oleh objek." },
+        { q: "Pemanfaatan sinar inframerah yang tepat:", a: ["Sterilisasi", "Foto tulang", "Terapi fisik", "Vitamin D", "Deteksi pipa"], correct: 2, penjelasan: "Inframerah digunakan dalam bidang medis (terapi fisik) dan peralatan elektronik (remote)." },
+        { q: "Panjang gelombang (6 x 10<sup>14</sup> Hz) adalah....", a: ["5 x 10<sup>-7</sup> m", "2 x 10<sup>-6</sup> m", "5 x 10<sup>5</sup> m", "2 x 10<sup>6</sup> m", "1,8 x 10<sup>27</sup> m"], correct: 0, penjelasan: "Dengan rumus λ = c/f, didapat: (3x10<sup>8</sup>) / (6x10<sup>14</sup>) = 5x10<sup>-7</sup> meter."},
+        { q: "Energi foton panjang gelombang 132 nm (h=6,6 x 10<sup>-34</sup> J.s):", a: ["1,5 x 10<sup>-17</sup> J", "1,5 x 10<sup>-18</sup> J", "1,5 x 10<sup>-19</sup> J", "4,5 x 10<sup>-18</sup> J", "4,5 x 10<sup>-19</sup> J"], correct: 1, penjelasan: "Menggunakan rumus E = (h x c) / λ, energi foton tersebut adalah 1,5 x 10<sup>-18</sup> Joule."},
+        { q: "Bahaya sinar ultraviolet bagi manusia:", a: ["DNA tulang", "Kemandulan", "Kanker kulit", "Suhu organ", "Rambut rontok"], correct: 2, penjelasan: "Paparan UV berlebih merusak sel kulit yang dapat memicu kanker kulit dan katarak mata."},
+        { q: "Sinar gamma memiliki daya tembus besar karena....", a: ["Panjang gelombang besar", "Frekuensi/energi tinggi", "Kecepatan tinggi", "Tidak diserap", "Amplitudo besar"], correct: 1, penjelasan: "Frekuensi dan energi sinar gamma adalah yang tertinggi di antara spektrum lainnya." }
+    ];
 
-        const questions = [
-            { q: "Gelombang elektromagnetik dapat merambat di ruang hampa karena....", a: ["Getaran partikel zat", "Perpindahan energi", "Osilasi medan listrik & magnet", "Gelombang mekanik", "Perpindahan elektron"], correct: 2, penjelasan: "Gelombang EM tersusun atas medan listrik dan magnet yang berosilasi, sehingga tidak butuh medium."},
-            { q: "Sifat gelombang elektromagnetik (GEM) yang tepat adalah....", a: ["Perlu medium, Transversal", "Transversal, Polarisasi", "Perlu medium, Magnet sejajar", "Transversal, Magnet sejajar", "Magnet sejajar, Polarisasi"], correct: 1, penjelasan: "GEM adalah gelombang transversal dan satu-satunya gelombang yang bisa terpolarisasi."},
-            { q: "Urutan spektrum GEM frekuensi besar ke kecil:", a: ["Radio ke sinar-X", "Gamma ke cahaya tampak", "Sinar-X ke inframerah", "Cahaya tampak ke gamma", "Inframerah ke mikro"], correct: 1, penjelasan: "Urutan frekuensi terbesar ke terkecil: Gamma, X, UV, Cahaya Tampak, Inframerah, Mikro, Radio." },
-            { q: "Tujuan penggunaan frekuensi tinggi pada 5G adalah....", a: ["Kecepatan data tinggi", "Murah", "Jangkauan luas", "Tembus dinding", "Hemat daya"], correct: 0, penjelasan: "Frekuensi tinggi menyediakan *bandwidth* lebih besar untuk kecepatan transmisi data yang lebih tinggi." },
-            { q: "Sistem RADAR menggunakan gelombang....", a: ["Sinar-X", "UV", "Mikro", "Inframerah", "Cahaya tampak"], correct: 2, penjelasan: "RADAR menggunakan gelombang mikro karena sifatnya yang mudah dipantulkan oleh objek." },
-            { q: "Pemanfaatan sinar inframerah yang tepat:", a: ["Sterilisasi", "Foto tulang", "Terapi fisik", "Vitamin D", "Deteksi pipa"], correct: 2, penjelasan: "Inframerah digunakan dalam bidang medis (terapi fisik) dan peralatan elektronik (remote)." },
-            { q: "Panjang gelombang (6 x 10^14 Hz) adalah....", a: ["5 x 10^-7 m", "2 x 10^-6 m", "5 x 10^5 m", "2 x 10^6 m", "1,8 x 10^27 m"], correct: 0, penjelasan: "Dengan rumus λ = c/f, didapat: (3x10^8) / (6x10^14) = 5x10^-7 meter."},
-            { q: "Energi foton panjang gelombang 132 nm (h=6,6x10^-34):", a: ["1,5 x 10^-17 J", "1,5 x 10^-18 J", "1,5 x 10^-19 J", "4,5 x 10^-18 J", "4,5 x 10^-19 J"], correct: 1, penjelasan: "Menggunakan E = hc/λ, energi foton tersebut adalah 1,5 x 10^-18 Joule."},
-            { q: "Bahaya sinar ultraviolet bagi manusia:", a: ["DNA tulang", "Kemandulan", "Kanker kulit", "Suhu organ", "Rambut rontok"], correct: 2, penjelasan: "Paparan UV berlebih merusak sel kulit yang dapat memicu kanker kulit dan katarak mata."},
-            { q: "Sinar gamma memiliki daya tembus besar karena....", a: ["Panjang gelombang besar", "Frekuensi/energi tinggi", "Kecepatan tinggi", "Tidak diserap", "Amplitudo besar"], correct: 1, penjelasan: "Frekuensi dan energi sinar gamma adalah yang tertinggi di antara spektrum lainnya." }
-        ];
+    let currentPage = 0, benar = 0, salah = 0;
+    let answersPerPage = [0, 0, 0, 0, 0]; 
 
-        let userAnswers = new Array(questions.length).fill(null);
-        const quizArea = document.getElementById("quiz-area");
-
-        questions.forEach((item, index) => {
-            let div = document.createElement("div");
-            div.className = "question";
-            div.innerHTML = `<p>${index + 1}. ${item.q}</p><ul class="options"></ul>`;
-            item.a.forEach((opt, i) => {
-                let li = document.createElement("li");
-                li.textContent = opt;
-                li.onclick = function() {
-                    playSound();
-                    Array.from(this.parentElement.children).forEach(el => el.style.backgroundColor = "#b39498");
-                    this.style.backgroundColor = "#FFD700";
-                    this.style.color = "#380208";
-                    userAnswers[index] = i;
-                };
-                div.querySelector('.options').appendChild(li);
-            });
-            quizArea.appendChild(div);
-        });
-
-        function hitungSkor() {
-            playSound();
-            if (userAnswers.includes(null)) {
-                alert("Harap jawab semua soal terlebih dahulu!");
-                return;
+    function renderQuiz() {
+        const container = document.getElementById('quiz-container');
+        for (let i = 0; i < 5; i++) {
+            let pageDiv = document.createElement('div');
+            pageDiv.className = `page ${i === 0 ? 'active' : ''}`;
+            let html = "";
+            for (let j = 0; j < 2; j++) {
+                let index = i * 2 + j;
+                html += `<div class="soal-card">
+                    <p><b>${index + 1}. ${questions[index].q}</b></p>`;
+                questions[index].a.forEach((opt, optIndex) => {
+                    html += `<button class="opsi-btn" onclick="cekJawaban(this, ${optIndex}, ${questions[index].correct}, ${index}, ${i})">${opt}</button>`;
+                });
+                html += `<div id="penjelasan-${index}" class="penjelasan-text" style="display:none;"><b>Penjelasan:</b> ${questions[index].penjelasan}</div></div>`;
             }
-            let benar = 0;
-            let detailHTML = "";
-            userAnswers.forEach((ans, index) => {
-                if (ans === questions[index].correct) {
-                    benar++;
-                } else {
-                    detailHTML += `<p style="text-align: left; margin: 5px 0; color: #FFF; font-size: 14px;"><strong>Soal ${index + 1}:</strong> ${questions[index].penjelasan}</p>`;
-                }
-            });
-
-            document.getElementById("quiz-area").style.display = "none";
-            document.getElementById("submit-btn").style.display = "none";
-            const resDiv = document.getElementById("result");
-            resDiv.style.display = "flex";
-            document.getElementById("score-details").innerHTML = 
-                `Benar: ${benar} | Salah: ${questions.length - benar}<br>Skor Akhir: ${(benar / questions.length) * 100}<br><br>
-                 <div style="max-height: 200px; overflow-y: auto; width: 100%; border-top: 1px solid #FFD700; padding-top: 10px;">
-                    ${detailHTML}
-                 </div>`;
+            pageDiv.innerHTML = html;
+            container.appendChild(pageDiv);
         }
+        updateNav();
+    }
 
-        function pindahKeMenu() {
-            playSound();
-            setTimeout(() => { window.location.href = 'menu.html'; }, 300);
-        }
-    </script>
+    function cekJawaban(btn, terpilih, benarJawaban, index, pageIdx) {
+        document.getElementById("suara-klik").play();
+        const tombols = btn.parentElement.querySelectorAll('.opsi-btn');
+        tombols.forEach(t => t.disabled = true);
+        if (terpilih === benarJawaban) { btn.classList.add('benar'); benar++; } 
+        else { btn.classList.add('salah'); tombols[benarJawaban].classList.add('benar'); salah++; }
+        document.getElementById(`penjelasan-${index}`).style.display = 'block';
+        answersPerPage[pageIdx]++;
+        updateNav();
+    }
+
+    function updateNav() {
+        let nav = document.getElementById('nav-btns');
+        let disabled = (answersPerPage[currentPage] < 2) ? "disabled" : "";
+        nav.innerHTML = `
+            ${currentPage > 0 ? `<button class="btn-nav" onclick="changePage(-1)">SEBELUMNYA</button>` : ''}
+            ${currentPage < 4 ? `<button class="btn-nav" ${disabled} onclick="changePage(1)">SELANJUTNYA</button>` : `<button class="btn-nav" ${disabled} onclick="showScore()">LIHAT SKOR</button>`}
+        `;
+    }
+
+    function changePage(step) {
+        document.querySelectorAll('.page')[currentPage].classList.remove('active');
+        currentPage += step;
+        document.querySelectorAll('.page')[currentPage].classList.add('active');
+        document.getElementById('page-num').innerText = currentPage + 1;
+        updateNav();
+    }
+
+    function showScore() {
+        document.getElementById('main-container').style.height = "auto";
+        document.getElementById('eval-title').innerText = "HASIL EVALUASI";
+        document.getElementById('quiz-container').style.display = "none";
+        document.getElementById('nav-btns').innerHTML = `<button class="btn-nav" onclick="location.href='menu.html'">KEMBALI KE MENU</button>`;
+        document.getElementById('hasil').innerHTML = `SKOR AKHIR:<br>${benar} Benar, ${salah} Salah`;
+    }
+
+    renderQuiz();
+</script>
 </body>
 </html>
