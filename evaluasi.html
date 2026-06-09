@@ -6,24 +6,72 @@
     <title>EVALUASI - E-WAVELAB</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet"/>
     <style>
-        body { margin: 0; font-family: 'Poppins', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; background: #fdf5f5; }
-        .container { 
-            width: 90%; max-width: 600px; height: 90vh; 
-            background: rgba(237, 190, 190, 0.85); 
-            padding: 20px; border-radius: 40px; border: 2px solid rgba(255,255,255,0.8);
-            backdrop-filter: blur(15px); display: flex; flex-direction: column; 
-            text-align: center; overflow: hidden; transition: all 0.5s ease;
+        * { box-sizing: border-box; }
+
+        body { 
+            margin: 0; 
+            /* Background disamakan dengan slide index */
+            background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.6) 100%), url('gbrGEM.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+            color: #333;
         }
+
+        .container { 
+            width: 90%; 
+            max-width: 600px; 
+            height: 90vh; 
+            background: rgba(237, 190, 190, 0.85); 
+            padding: 20px; 
+            border-radius: 40px; 
+            border: 2px solid rgba(255,255,255,0.8);
+            backdrop-filter: blur(15px); 
+            display: flex; 
+            flex-direction: column; 
+            text-align: center; 
+            overflow: hidden; 
+            transition: all 0.5s ease;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+        }
+
         #quiz-container { flex-grow: 1; overflow-y: auto; padding: 10px; }
-        .soal-card { background: rgba(255,255,255,0.4); padding: 15px; border-radius: 15px; margin-bottom: 10px; text-align: left; }
+        
+        .soal-card { 
+            background: rgba(255,255,255,0.4); 
+            padding: 15px; 
+            border-radius: 15px; 
+            margin-bottom: 10px; 
+            text-align: left; 
+        }
+
         .soal-card p { font-weight: 700; color: #333; margin: 0 0 8px 0; font-size: 15px; }
-        .opsi-btn { display: block; width: 100%; padding: 10px; margin: 4px 0; border-radius: 8px; border: 1px solid rgba(255,255,255,0.5); background: rgba(255,255,255,0.3); cursor: pointer; font-size: 14px; font-weight: 600; text-align: left; }
+
+        .opsi-btn { 
+            display: block; width: 100%; padding: 10px; margin: 4px 0; 
+            border-radius: 8px; border: 1px solid rgba(255,255,255,0.5); 
+            background: rgba(255,255,255,0.3); cursor: pointer; 
+            font-size: 14px; font-weight: 600; text-align: left; 
+        }
+
         .benar { background: #84fab0 !important; color: #fff; }
         .salah { background: #ff6b6b !important; color: #fff; }
         .page { display: none; }
         .page.active { display: block; }
+        
         h1 { font-size: 24px; margin-bottom: 10px; color: #5d4a8e; }
-        .btn-nav { padding: 10px 20px; cursor: pointer; border-radius: 20px; border: none; font-weight: 800; background: #5d4a8e; color: white; margin: 5px; }
+        
+        .btn-nav { 
+            padding: 10px 20px; cursor: pointer; border-radius: 20px; 
+            border: none; font-weight: 800; background: #5d4a8e; 
+            color: white; margin: 5px; 
+        }
+
         .btn-nav:disabled { background: #ccc; cursor: not-allowed; }
         .penjelasan-text { font-weight: 700; color: #4a3a6a; margin-top: 5px; font-size: 13px; }
     </style>
@@ -67,7 +115,7 @@
             for (let j = 0; j < 2; j++) {
                 let index = i * 2 + j;
                 html += `<div class="soal-card">
-                    <p><b>${index + 1}. ${questions[index].q}</b></p>`;
+                        <p><b>${index + 1}. ${questions[index].q}</b></p>`;
                 questions[index].a.forEach((opt, optIndex) => {
                     html += `<button class="opsi-btn" onclick="cekJawaban(this, ${optIndex}, ${questions[index].correct}, ${index}, ${i})">${opt}</button>`;
                 });
